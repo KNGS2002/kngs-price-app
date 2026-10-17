@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#111114">
+<title>Gaming Price Maker</title>
+<style>
+:root{color-scheme:dark;--bg:#101014;--panel:#1a1a21;--panel2:#22222b;--line:#34343f;--text:#f5f5f7;--muted:#a7a7b4;--red:#ef3340;--red2:#b51e2a;--green:#45d483}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans Myanmar",sans-serif}
+main{max-width:760px;margin:auto;padding:18px 14px 42px}.hero{background:linear-gradient(135deg,#401016,#191920 65%);border:1px solid #55242a;border-radius:20px;padding:20px;margin-bottom:16px}
+.kicker{font-size:12px;letter-spacing:1.5px;color:#ff9ba2;font-weight:800}.hero h1{margin:7px 0 5px;font-size:25px}.hero p{margin:0;color:#d1c5c8;font-size:14px;line-height:1.6}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;margin:13px 0}
+h2{font-size:17px;margin:0 0 13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}.field:last-child{margin-bottom:0}label{font-size:13px;color:var(--muted)}
+input,select,textarea{width:100%;background:#111116;color:var(--text);border:1px solid #3a3a46;border-radius:10px;padding:12px;font:inherit;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--red)}textarea{min-height:130px;resize:vertical;line-height:1.7}
+button{font:inherit;cursor:pointer;border:0;border-radius:11px;padding:12px 14px;font-weight:750}.primary{background:var(--red);color:white}.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.danger{background:#381b20;color:#ff9ba2;border:1px solid #6a2931}.buttons{display:flex;gap:8px;flex-wrap:wrap}.buttons button{flex:1;min-width:130px}
+.hint{font-size:12px;color:var(--muted);line-height:1.6}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.stat{background:#111116;border:1px solid var(--line);border-radius:12px;padding:11px}.stat span{display:block;font-size:11px;color:var(--muted)}.stat strong{display:block;font-size:17px;margin-top:4px;overflow-wrap:anywhere}
+.item{display:grid;grid-template-columns:minmax(0,1fr) minmax(105px,.7fr) auto;gap:8px;align-items:end;margin:10px 0;padding-bottom:10px;border-bottom:1px solid var(--line)}.item input{padding:10px 9px}.item button{padding:10px 11px}.item .field{margin:0}.output{background:#101014;border:1px dashed #55515a;border-radius:12px;padding:14px;white-space:pre-wrap;line-height:1.8;font-size:14px;overflow-wrap:anywhere;min-height:90px}
+.toast{min-height:22px;color:var(--green);font-size:13px;margin-top:8px}.foot{text-align:center;color:var(--muted);font-size:12px;padding:14px}
+@media(max-width:480px){main{padding:12px 10px 28px}.hero{padding:17px}.hero h1{font-size:22px}.panel{padding:13px}.item{grid-template-columns:minmax(0,1fr) minmax(95px,.8fr) auto;gap:6px}.item label{font-size:11px}.item input{font-size:13px;padding:10px 7px}.item button{padding:10px 9px}.summary{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div class="kicker">GAMING TOP-UP TOOLS</div>
+    <h1>💎 Price List Maker</h1>
+    <p>အရင်းဈေးထည့်ပါ · အမြတ်အလိုအလျောက်တွက်ပါ · Telegram မှာ တင်ဖို့ Copy ကူးပါ</p>
+  </header>
+
+  <section class="panel">
+    <h2>⚙️ ဆိုင်နဲ့ ဈေးနှုန်းဆက်တင်</h2>
+    <div class="field"><label for="store">ဆိုင်နာမည်</label><input id="store" value="Ko Nay Gaming Store" maxlength="70"></div>
+    <div class="grid">
+      <div class="field"><label for="margin">အမြတ် (%)</label><input id="margin" type="number" min="0" max="500" step="0.5" value="10"></div>
+      <div class="field"><label for="currency">ငွေကြေး</label><select id="currency"><option value="ks">Ks</option><option value="฿">฿ Baht</option><option value="$">$ USD</option></select></div>
+    </div>
+    <div class="field"><label for="rounding">ရောင်းဈေးအဝိုင်းချနည်း</label><select id="rounding"><option value="1">အပြည့်ကိန်း (1 စီ)</option><option value="10">10 စီ အပေါ်တင်</option><option value="100">100 စီ အပေါ်တင်</option><option value="500">500 စီ အပေါ်တင်</option><option value="1000">1,000 စီ အပေါ်တင်</option></select></div>
+    <p class="hint">တွက်ချက်ပုံ — အရင်းဈေး × (1 + အမြတ်ရာခိုင်နှုန်း ÷ 100)။ အဝိုင်းချနည်းကို ရွေးထားပါက အနီးဆုံးအောက်မချဘဲ သတ်မှတ်တန်ဖိုးအတိုင်း အပေါ်တင်တွက်ပါမယ်။</p>
+  </section>
+
+  <section class="panel">
+    <h2>🧾 အရင်းဈေးစာရင်း</h2>
+    <p class="hint">ပစ္စည်းအမည်နဲ့ အရင်းဈေးကို တစ်ကြောင်းစီ ရေးပါ။ ဥပမာ Dia 86 = 6000</p>
+    <textarea id="bulk" spellcheck="false" placeholder="Dia 86 = 6000&#10;Dia 172 = 12000&#10;Weekly Pass = 5000"></textarea>
+    <div class="buttons" style="margin-top:10px">
+      <button class="primary" id="bulkAdd">စာရင်းမှ ထည့်မယ်</button>
+      <button class="secondary" id="sample">နမူနာစာရင်း</button>
+    </div>
+    <p class="hint">စာရင်းတင်သွင်းရာမှာ “ပစ္စည်းအမည် = ဈေးနှုန်း” သို့မဟုတ် “ပစ္စည်းအမည်, ဈေးနှုန်း” ပုံစံကို သုံးပါ။</p>
+  </section>
+
+  <section class="panel">
+    <h2>✍️ ပစ္စည်းတစ်ခုချင်း ထည့်ရန်</h2>
+    <div class="grid">
+      <div class="field"><label for="newName">ပစ္စည်းအမည်</label><input id="newName" placeholder="ဥပမာ Dia 86"></div>
+      <div class="field"><label for="newCost">အရင်းဈေး</label><input id="newCost" type="number" min="0" step="any" placeholder="6000"></div>
+    </div>
+    <button class="primary" id="addOne" style="width:100%">＋ ပစ္စည်းထည့်မယ်</button>
+  </section>
+
+  <section class="panel">
+    <h2>📊 တွက်ချက်ပြီး ရောင်းဈေး</h2>
+    <div class="summary">
+      <div class="stat"><span>ပစ္စည်းအရေအတွက်</span><strong id="count">0</strong></div>
+      <div class="stat"><span>စုစုပေါင်းအရင်း</span><strong id="totalCost">0</strong></div>
+      <div class="stat"><span>ခန့်မှန်းအမြတ်စုစုပေါင်း</span><strong id="totalProfit">0</strong></div>
+    </div>
+    <div id="items"></div>
+    <div class="buttons" style="margin-top:12px">
+      <button class="secondary" id="clear">စာရင်းရှင်းမယ်</button>
+      <button class="primary" id="copy">📋 Price List Copy</button>
+    </div>
+    <h2 style="margin-top:20px">Telegram မှာတင်ရန် စာသား</h2>
+    <div class="output" id="output">ဆိုင်နာမည်နဲ့ ပစ္စည်းဈေးတွေ ထည့်လိုက်ပါ။</div>
+    <div class="buttons" style="margin-top:10px"><button class="secondary" id="copyFull">စာသားအပြည့် Copy</button></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </section>
+  <footer class="foot">Gaming Price List Maker · ဈေးနှုန်းများကို ဒီ browser ထဲမှာပဲ သိမ်းဆည်းထားပါတယ်။</footer>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  let products = [];
+  const fmt = n => Number(n).toLocaleString('en-US',{maximumFractionDigits:2});
+  const cleanName = s => s.trim().slice(0,100);
+  function showToast(msg){ $('toast').textContent=msg; }
+  function priceFor(cost){
+    const pct = Math.min(500, Math.max(0, Number($('margin').value)||0));
+    const step = Math.max(1, Number($('rounding').value)||1);
+    return Math.ceil((cost*(1+pct/100))/step)*step;
+  }
+  function render(){
+    const currency=$('currency').value;
+    $('count').textContent=products.length;
+    $('totalCost').textContent=fmt(products.reduce((s,p)=>s+p.cost,0))+' '+currency;
+    $('totalProfit').textContent=fmt(products.reduce((s,p)=>s+(priceFor(p.cost)-p.cost),0))+' '+currency;
+    const host=$('items'); host.replaceChildren();
+    products.forEach((p,i)=>{
+      const row=document.createElement('div'); row.className='item';
+      const nameWrap=document.createElement('div'); nameWrap.className='field';
+      const nl=document.createElement('label'); nl.textContent='ပစ္စည်းအမည်';
+      const name=document.createElement('input'); name.value=p.name; name.maxLength=100; name.setAttribute('aria-label','ပစ္စည်းအမည်');
+      name.addEventListener('input',()=>{p.name=name.value; updateOutput();});
+      nameWrap.append(nl,name);
+      const costWrap=document.createElement('div'); costWrap.className='field';
+      const cl=document.createElement('label'); cl.textContent='အရင်းဈေး';
+      const cost=document.createElement('input'); cost.type='number'; cost.min='0'; cost.step='any'; cost.value=p.cost; cost.setAttribute('aria-label','အရင်းဈေး');
+      cost.addEventListener('input',()=>{if(cost.value!==''&&Number(cost.value)>=0){p.cost=Number(cost.value);render();}}); costWrap.append(cl,cost);
+      const del=document.createElement('button'); del.className='danger'; del.textContent='✕'; del.setAttribute('aria-label',p.name+' ဖျက်ရန်'); del.addEventListener('click',()=>{products.splice(i,1);render();showToast('ပစ္စည်းဖျက်ပြီးပါပြီ။');});
+      row.append(nameWrap,costWrap,del); host.append(row);
+    });
+    updateOutput();
+  }
+  function updateOutput(){
+    const store=$('store').value.trim()||'Gaming Store';
+    const currency=$('currency').value;
+    const valid=products.filter(p=>p.name.trim() && Number.isFinite(p.cost) && p.cost>=0);
+    $('output').textContent=valid.length ? `${store}\n💎 PRICE LIST\n\n${valid.map(p=>`${p.name.trim()} = ${fmt(priceFor(p.cost))} ${currency}`).join('\n')}` : 'ဆိုင်နာမည်နဲ့ ပစ္စည်းဈေးတွေ ထည့်လိုက်ပါ။';
+  }
+  function addProduct(name,cost){
+    name=cleanName(name);
+    if(!name||cost===''||!Number.isFinite(Number(cost))||Number(cost)<0)return false;
+    products.push({name,cost:Number(cost)}); return true;
+  }
+  $('addOne').addEventListener('click',()=>{
+    if(!addProduct($('newName').value,$('newCost').value)){showToast('ပစ္စည်းအမည်နဲ့ မှန်ကန်တဲ့ အရင်းဈေး ထည့်ပါ။');return;}
+    $('newName').value='';$('newCost').value='';render();showToast('ပစ္စည်းထည့်ပြီးပါပြီ။');
+  });
+  $('newCost').addEventListener('keydown',e=>{if(e.key==='Enter')$('addOne').click();});
+  $('bulkAdd').addEventListener('click',()=>{
+    const lines=$('bulk').value.split(/\r?\n/);let added=0,bad=0;
+    for(const line of lines){
+      const t=line.trim();if(!t)continue;
+      const m=t.match(/^(.+?)\s*(?:=|,|\t|:)\s*([0-9][0-9,]*(?:\.[0-9]+)?)\s*$/);
+      if(!m){bad++;continue;}
+      if(addProduct(m[1],m[2].replace(/,/g,'')))added++;else bad++;
+    }
+    render();showToast(`${added} မျိုးထည့်ပြီးပါပြီ။${bad?' မဖတ်နိုင်တဲ့ '+bad+' ကြောင်းရှိပါတယ်။':''}`);
+  });
+  $('sample').addEventListener('click',()=>{$('bulk').value='Dia 86 = 6000\nDia 172 = 12000\nDia 257 = 17500\nWeekly Pass = 6500';});
+  $('clear').addEventListener('click',()=>{if(!products.length)return; if(confirm('ပစ္စည်းစာရင်းအားလုံး ဖျက်မလား?')){products=[];render();showToast('စာရင်းရှင်းပြီးပါပြီ။');}});
+  async function copyText(text){
+    try{await navigator.clipboard.writeText(text);showToast('Copy ကူးပြီးပါပြီ။ Telegram မှာ Paste လုပ်နိုင်ပါပြီ။');}
+    catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();const ok=document.execCommand('copy');ta.remove();showToast(ok?'Copy ကူးပြီးပါပြီ။':'Copy မအောင်မြင်ပါ။ စာသားကို ဖိနှိပ်ပြီး Copy လုပ်ပါ။');}
+  }
+  $('copy').addEventListener('click',()=>copyText(products.filter(p=>p.name.trim()).map(p=>`${p.name.trim()} = ${fmt(priceFor(p.cost))} ${$('currency').value}`).join('\n')));
+  $('copyFull').addEventListener('click',()=>copyText($('output').textContent));
+  ['store','margin','currency','rounding'].forEach(id=>$(id).addEventListener('input',render));
+  // Telegram Web Apps integration: safely use the official bridge if opened inside Telegram.
+  if(window.Telegram && window.Telegram.WebApp){window.Telegram.WebApp.ready();window.Telegram.WebApp.expand();}
+  render();
+})();
+</script>
+</body>
+</html>
